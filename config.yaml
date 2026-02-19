@@ -1,0 +1,4 @@
+classifier:
+  checkpoint: ./checkpoints/BR-A/1208_paired/best_model.pth
+  img_size: 224
+  num_classes: ~
