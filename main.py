@@ -1,5 +1,5 @@
 import os
-from classify import Classifier
+from baler_classification import Classifier
 
 if __name__ == "__main__":
     model = Classifier()

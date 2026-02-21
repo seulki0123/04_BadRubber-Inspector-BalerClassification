@@ -1,0 +1,9 @@
+[project]
+name = "baler-classification"
+version = "0.1.0"
+description = "Baler classification package"
+authors = [{name = "Your Name"}]
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]

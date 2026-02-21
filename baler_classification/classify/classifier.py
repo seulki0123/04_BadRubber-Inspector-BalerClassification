@@ -9,7 +9,7 @@ from PIL import Image
 from torchvision import transforms
 import torchvision.models as models
 
-from utils import load_config
+from baler_classification.utils import load_config
 from .utils import sort_filename, combine_images
 
 class Classifier:
