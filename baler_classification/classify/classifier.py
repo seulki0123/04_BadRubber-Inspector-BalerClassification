@@ -19,6 +19,7 @@ class Classifier:
         config = load_config()["classifier"]
         checkpoint_path = config["checkpoint"]
         num_classes = config["num_classes"]
+        self.class_names = config["class_names"]
 
         self.transform = transforms.Compose([
             transforms.ToTensor(),
@@ -83,6 +84,7 @@ class Classifier:
             probs = torch.softmax(output, dim=1).cpu().numpy()[0]
 
         class_number = int(np.argmax(probs))
+        class_name = self.class_names[class_number]
         confidence = float(probs[class_number])
 
-        return class_number, confidence
+        return class_number, class_name, confidence
