@@ -14,15 +14,24 @@ def sort_filename(path1: str, path2: str):
     else:
         return path2, path1, True
 
-def combine_images(top_img: Image.Image, bottom_img: Image.Image, img_size: int):
+def combine_images(
+    top_img: Image.Image,
+    bottom_img: Image.Image,
+    img_size: int,
+    top_start_ratio: float = 0.5,
+    bottom_end_ratio: float = 0.5
+):
     orig_w, orig_h = top_img.size
-    
-    top_crop = top_img.crop((0, orig_h // 2, orig_w, orig_h))
+
+    top_start = int(orig_h * top_start_ratio)
+    bottom_end = int(orig_h * bottom_end_ratio)
+
+    top_crop = top_img.crop((0, top_start, orig_w, orig_h))
+    bottom_crop = bottom_img.crop((0, 0, orig_w, bottom_end))
+
     top_crop = top_crop.resize((img_size, img_size), Image.Resampling.LANCZOS)
-    
-    bottom_crop = bottom_img.crop((0, 0, orig_w, orig_h // 2))
     bottom_crop = bottom_crop.resize((img_size, img_size), Image.Resampling.LANCZOS)
-    
+
     combined = Image.new('RGB', (img_size, img_size * 2))
     combined.paste(top_crop, (0, 0))
     combined.paste(bottom_crop, (0, img_size))

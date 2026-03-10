@@ -32,6 +32,8 @@ class Classifier:
         self.img_size = config["img_size"]
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model, self.num_classes = self._load_checkpoint(checkpoint_path, num_classes)
+        self.top_start_ratio = config.get("top_start_ratio", 0.5)
+        self.bottom_end_ratio = config.get("bottom_end_ratio", 0.5)
 
     def _load_checkpoint(self, checkpoint_path: str, num_classes: Optional[int]):
         ckpt = torch.load(checkpoint_path, map_location=self.device, weights_only=False)
@@ -76,7 +78,13 @@ class Classifier:
         top_img = Image.open(top_path).convert("RGB")
         bottom_img = Image.open(bottom_path).convert("RGB")
 
-        img = combine_images(top_img, bottom_img, self.img_size)
+        img = combine_images(
+            top_img=top_img,
+            bottom_img=bottom_img,
+            img_size=self.img_size,
+            top_start_ratio=self.top_start_ratio,
+            bottom_end_ratio=self.bottom_end_ratio
+        )
         tensor = self.transform(img).unsqueeze(0).to(self.device)
 
         with torch.no_grad():
