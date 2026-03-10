@@ -34,6 +34,7 @@ class Classifier:
         self.model, self.num_classes = self._load_checkpoint(checkpoint_path, num_classes)
         self.top_start_ratio = config.get("top_start_ratio", 0.5)
         self.bottom_end_ratio = config.get("bottom_end_ratio", 0.5)
+        print(f"Top start ratio: {self.top_start_ratio}, Bottom end ratio: {self.bottom_end_ratio}")
 
     def _load_checkpoint(self, checkpoint_path: str, num_classes: Optional[int]):
         ckpt = torch.load(checkpoint_path, map_location=self.device, weights_only=False)
