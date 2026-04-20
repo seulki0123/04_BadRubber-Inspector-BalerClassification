@@ -15,8 +15,11 @@ from .utils import sort_filename, combine_images
 class Classifier:
     def __init__(
         self,
+        config: dict | None = None,
     ):
-        config = load_config()["classifier"]
+        if config is None:
+            config = load_config()
+        config = config["classifier"]
         checkpoint_path = config["checkpoint"]
         num_classes = config["num_classes"]
         self.class_names = config["class_names"]
